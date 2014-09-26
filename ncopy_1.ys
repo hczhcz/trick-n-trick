@@ -7,7 +7,6 @@ ncopy:
 	mrmovl 8(%esp), %ecx	# dst
 
 Begin:
-
 	rrmovl %edx, %ebp	# rst = len
 	irmovl $0x3c, %esi	# msk = 0x3c
 
