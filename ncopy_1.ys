@@ -2,9 +2,9 @@
 # A tricky solution
 
 ncopy:
-mrmovl 4(%esp), %ebx # src
-mrmovl 12(%esp), %edx # len
-mrmovl 8(%esp), %ecx # dst
+	mrmovl 4(%esp), %ebx	# src
+	mrmovl 12(%esp), %edx	# len
+	mrmovl 8(%esp), %ecx	# dst
 
 Begin:
 
