@@ -1,0 +1,306 @@
+# ICS Lab7 PartC
+# A tricky solution
+
+ncopy:
+mrmovl 4(%esp), %ebx # src
+mrmovl 12(%esp), %edx # len
+mrmovl 8(%esp), %ecx # dst
+
+Begin:
+
+	rrmovl %edx, %ebp	# rst = len
+	irmovl $0x3c, %esi	# msk = 0x3c
+
+	addl %edx, %ebp
+	addl %ebp, %ebp		# rst *= 4
+	andl %esi, %ebp		# mask(rst, msk)
+
+	mrmovl Jump(%ebp), %esi	# addr = Jump[rst]
+
+	rrmovl %edx, %eax	# count = len;
+
+	pushl %esi		# push addr
+	ret			# address based jump
+
+# Jump table
+Jump:
+	.long LoopChk1
+	.long x0
+	.long x1
+	.long x2
+	.long xa3
+	.long xa4
+	.long xa5
+	.long xa6
+	.long xa7
+	.long xa8
+	.long xa9
+	.long xa10
+	.long xa11
+	.long xa12
+	.long xa13
+	.long xa14
+
+##################################################################
+
+x2:
+	mrmovl 8(%ebx), %esi
+	mrmovl 10(%ebx), %edi
+	rmmovl %esi, 8(%ecx)
+	addl %edi, %eax
+
+x1:
+	mrmovl 4(%ebx), %esi
+	mrmovl 6(%ebx), %edi
+	rmmovl %esi, 4(%ecx)
+	addl %edi, %eax
+
+x0:
+	mrmovl 0(%ebx), %esi
+	mrmovl 2(%ebx), %edi
+	rmmovl %esi, 0(%ecx)
+	addl %edi, %eax
+
+	iaddl $0xfffffff0, %edx	# dec len
+	jl Fin			# if len < 0, finish
+	jmp LoopMain
+
+##################################################################
+
+xa14:
+	mrmovl 56(%ebx), %esi
+	mrmovl 58(%ebx), %edi
+	rmmovl %esi, 56(%ecx)
+	mrmovl 54(%ebx), %esi
+	jmp xe14
+
+xa13:
+	mrmovl 52(%ebx), %edi
+	mrmovl 54(%ebx), %esi
+	rmmovl %edi, 52(%ecx)
+	mrmovl 50(%ebx), %edi
+	jmp xe13
+
+xa12:
+	mrmovl 48(%ebx), %esi
+	mrmovl 50(%ebx), %edi
+	rmmovl %esi, 48(%ecx)
+	mrmovl 46(%ebx), %esi
+	jmp xe12
+
+xa11:
+	mrmovl 44(%ebx), %edi
+	mrmovl 46(%ebx), %esi
+	rmmovl %edi, 44(%ecx)
+	mrmovl 42(%ebx), %edi
+	jmp xe11
+
+xa10:
+	mrmovl 40(%ebx), %esi
+	mrmovl 42(%ebx), %edi
+	rmmovl %esi, 40(%ecx)
+	mrmovl 38(%ebx), %esi
+	jmp xe10
+
+xa9:
+	mrmovl 36(%ebx), %edi
+	mrmovl 38(%ebx), %esi
+	rmmovl %edi, 36(%ecx)
+	mrmovl 34(%ebx), %edi
+	jmp xf9
+
+xa8:
+	mrmovl 32(%ebx), %esi
+	mrmovl 34(%ebx), %edi
+	rmmovl %esi, 32(%ecx)
+	mrmovl 30(%ebx), %esi
+	jmp xf8
+
+xa7:
+	mrmovl 28(%ebx), %edi
+	mrmovl 30(%ebx), %esi
+	rmmovl %edi, 28(%ecx)
+	mrmovl 26(%ebx), %edi
+	jmp xf7
+
+xa6:
+	mrmovl 24(%ebx), %esi
+	mrmovl 26(%ebx), %edi
+	rmmovl %esi, 24(%ecx)
+	mrmovl 22(%ebx), %esi
+	jmp xf6
+
+xa5:
+	mrmovl 20(%ebx), %edi
+	mrmovl 22(%ebx), %esi
+	rmmovl %edi, 20(%ecx)
+	mrmovl 18(%ebx), %edi
+	jmp xf5
+
+xa4:
+	mrmovl 16(%ebx), %esi
+	mrmovl 18(%ebx), %edi
+	rmmovl %esi, 16(%ecx)
+	mrmovl 14(%ebx), %esi
+	jmp xf4
+
+xa3:
+	mrmovl 12(%ebx), %edi
+	mrmovl 14(%ebx), %esi
+	rmmovl %edi, 12(%ecx)
+	mrmovl 10(%ebx), %edi
+	jmp xf3
+
+##################################################################
+
+xf9:
+	addl %esi, %eax
+	mrmovl 30(%ebx), %esi
+	rmmovl %edi, 34(%ecx)
+
+xf8:
+	addl %edi, %eax
+	mrmovl 26(%ebx), %edi
+	rmmovl %esi, 30(%ecx)
+
+xf7:
+	addl %esi, %eax
+	mrmovl 22(%ebx), %esi
+	rmmovl %edi, 26(%ecx)
+
+xf6:
+	addl %edi, %eax
+	mrmovl 18(%ebx), %edi
+	rmmovl %esi, 22(%ecx)
+
+xf5:
+	addl %esi, %eax
+	mrmovl 14(%ebx), %esi
+	rmmovl %edi, 18(%ecx)
+
+xf4:
+	addl %edi, %eax
+	mrmovl 10(%ebx), %edi
+	rmmovl %esi, 14(%ecx)
+
+xf3:
+	addl %esi, %eax
+	mrmovl 6(%ebx), %esi
+	rmmovl %edi, 10(%ecx)
+
+xf2:
+	addl %edi, %eax
+	mrmovl 2(%ebx), %edi
+	rmmovl %esi, 6(%ecx)
+
+xf1:
+	addl %esi, %eax
+	mrmovl 0(%ebx), %esi
+	rmmovl %edi, 2(%ecx)
+
+	rmmovl %esi, 0(%ecx)
+	addl %edi, %eax
+
+LoopChk:
+	iaddl $0xfffffff0, %edx	# dec len
+	jl Fin			# if len < 0, finish
+
+LoopMain:
+	addl %ebp, %ebx		# ebx += rst
+	addl %ebp, %ecx		# ecx += rst
+	irmovl $64, %ebp
+
+	mrmovl 60(%ebx), %edi
+	mrmovl 62(%ebx), %esi
+	rmmovl %edi, 60(%ecx)
+	mrmovl 58(%ebx), %edi
+
+xe15:
+	addl %esi, %eax
+	mrmovl 54(%ebx), %esi
+	rmmovl %edi, 58(%ecx)
+
+xe14:
+	addl %edi, %eax
+	mrmovl 50(%ebx), %edi
+	rmmovl %esi, 54(%ecx)
+
+xe13:
+	addl %esi, %eax
+	mrmovl 46(%ebx), %esi
+	rmmovl %edi, 50(%ecx)
+
+xe12:
+	addl %edi, %eax
+	mrmovl 42(%ebx), %edi
+	rmmovl %esi, 46(%ecx)
+
+xe11:
+	addl %esi, %eax
+	mrmovl 38(%ebx), %esi
+	rmmovl %edi, 42(%ecx)
+
+xe10:
+	addl %edi, %eax
+	mrmovl 34(%ebx), %edi
+	rmmovl %esi, 38(%ecx)
+
+xe9:
+	addl %esi, %eax
+	mrmovl 30(%ebx), %esi
+	rmmovl %edi, 34(%ecx)
+
+xe8:
+	addl %edi, %eax
+	mrmovl 26(%ebx), %edi
+	rmmovl %esi, 30(%ecx)
+
+xe7:
+	addl %esi, %eax
+	mrmovl 22(%ebx), %esi
+	rmmovl %edi, 26(%ecx)
+
+xe6:
+	addl %edi, %eax
+	mrmovl 18(%ebx), %edi
+	rmmovl %esi, 22(%ecx)
+
+xe5:
+	addl %esi, %eax
+	mrmovl 14(%ebx), %esi
+	rmmovl %edi, 18(%ecx)
+
+xe4:
+	addl %edi, %eax
+	mrmovl 10(%ebx), %edi
+	rmmovl %esi, 14(%ecx)
+
+xe3:
+	addl %esi, %eax
+	mrmovl 6(%ebx), %esi
+	rmmovl %edi, 10(%ecx)
+
+xe2:
+	addl %edi, %eax
+	mrmovl 2(%ebx), %edi
+	rmmovl %esi, 6(%ecx)
+
+xe1:
+	addl %esi, %eax
+	mrmovl 0(%ebx), %esi
+	rmmovl %edi, 2(%ecx)
+
+	rmmovl %esi, 0(%ecx)
+	addl %edi, %eax
+
+LoopChk1:
+	iaddl $0xfffffff0, %edx	# dec len
+	jge LoopMain		# if len >= 0, loop
+
+Fin:
+	irmovl $0xffff, %ecx
+	andl %ecx, %eax
+
+	ret
+
+End:
