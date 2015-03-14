@@ -1,4 +1,4 @@
-// CS101 labwork 1
+// SE101 labwork 1
 
 /* 
  * abs - absolute value of x (except returns TMin for TMin)
