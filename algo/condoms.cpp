@@ -50,13 +50,19 @@ using namespace std;
 // A 1 2 a
 // A 2 1 b
 
-// 2n + 3n
+// 3n + 4n
 // A 1 2 a
-// A 1 3 b
-// A 1 4 c
-// B 2 1 a
-// B 2 3 b
-// B 2 4 c
+// A 1 4 b
+// C 5 2 a
+// C 5 4 b
+// B 3 2 a
+// B 3 4 b
+// B 3 1 c
+// B 3 5 d
+// A 2 1 c
+// A 2 5 d
+// C 4 1 c
+// C 4 5 d
 
 long data[100];
 
@@ -66,7 +72,6 @@ int main() {
         if (!s.size()) continue;
 
         int last = 0;
-        bool neg = false;
 
         istringstream is {s};
 
