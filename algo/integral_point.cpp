@@ -1,3 +1,5 @@
+// find the integral point O in triangle ABC that |OA| + |OB| + |OC| is minimal
+
 #include <cmath>
 #include <random>
 #include <iostream>
