@@ -56,10 +56,12 @@ candidates = [
 
 if len(candidates) <= 20:
     print('candidates', candidates)
+else:
+    print('candidates', len(candidates))
 
-if len(candidates) >= 3:
+if len(candidates) >= 2:
     print('guess', min(
-        (max(test_count(word, candidates).values()), word)
+        (max(test_count(word, candidates).values()), word not in candidates, word)
         for word in (
             candidates
             if hard
